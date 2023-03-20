@@ -1,0 +1,86 @@
+﻿@model IEnumerable<ePizzeriaHub.Entities.Item>
+
+    @{
+        ViewData["Title"] = "Items";
+    }
+
+
+    <div class="col-sm-12 pt-4 pb-2">
+        <h2>
+        Items List
+        <span class="float-right" style="float:right"><a asp-action="Create" class="btn btn-outline-primary">Create New</a></span>
+
+        </h2>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UnitPrice)
+                </th>
+                <th>
+                    Image
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CategoryId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PizzeriaId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemTypeId)
+                </th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            $@Html.DisplayFor(modelItem => item.UnitPrice)
+                        </td>
+                        <td>
+
+                        <img src="@item.ImageUrl" style="height:70px;width:70px" class="d-inline-block mb-1">
+                    </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CategoryId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PizzeriaId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ItemTypeId)
+                        </td>
+
+                    <td style="width:170px; float:right">
+                        <a class="btn btn-outline-info" asp-controller="Item" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        &nbsp;<a class="btn btn-outline-danger" asp-controller="Item" asp-action="Delete" asp-route-id="@item.Id" asp-route-url="@item.ImageUrl" onclick="return confirm('Are you sure you want to delete?')">Delete</a>
+                    </td>
+                        
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>

@@ -1,0 +1,77 @@
+﻿@model ePizzeriaHub.WebUI.Models.ItemModel
+
+@{
+    ViewData["Title"] = Model != null ? "Edit" : "Create";
+}
+
+<div class="col-sm-12 pt-4 pb-2">
+    <h2>
+        Add Pizza
+    </h2>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="@ViewData["Title"]" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" style="color:red"></div>
+            <div class="form-group">
+                <input asp-for="Id" type="hidden" />
+            </div>
+            <div class="form-group pt-1">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" style="color:red"></span>
+            </div>
+            <div class="form-group pt-1">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" style="color:red"></span>
+            </div>
+            <div id="divPrice" class="form-group pt-1">
+                <label asp-for="UnitPrice" class="control-label"></label>
+                <input id="UnitPrice" asp-for="UnitPrice" class="form-control" />
+                <span asp-validation-for="UnitPrice" style="color:red"></span>
+            </div>            
+            <div class="form-group pt-1">
+                <label asp-for="CategoryId" class="control-label">Category</label>
+                <select id="CategoryId" asp-for="CategoryId" class="form-control" asp-items="@(new SelectList(ViewBag.Categories,"Id","Name"))">
+                    <option value="">--Select--</option>
+                </select>
+                <span asp-validation-for="CategoryId" style="color:red"></span>
+            </div>
+            <div class="form-group pt-1">
+                <label asp-for="PizzeriaId" class="control-label">Pizzeria</label>
+                <select asp-for="PizzeriaId" class="form-control" asp-items="@(new SelectList(ViewBag.Pizzerias,"Id","Name"))">
+                    <option value="">--Select--</option>
+                </select>
+                <span asp-validation-for="PizzeriaId" style="color:red"></span>
+            </div>
+            <div class="form-group pt-1">
+                <label asp-for="ItemTypeId" class="control-label">ItemType</label>
+                <select asp-for="ItemTypeId" class="form-control" asp-items="@(new SelectList(ViewBag.ItemTypes,"Id","Name"))">
+                    <option value="">--Select--</option>
+                </select>
+                <span asp-validation-for="ItemTypeId" style="color:red" ></span>
+            </div>
+            <div class="form-group pt-1">
+                <input asp-for="File" class="form-control" style="border:none;padding: .375rem 0;" />
+                <span asp-validation-for="File" style="color:red"></span>
+                <br />
+                @if (Model != null && !string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <input type="hidden" asp-for="ImageUrl" />
+                    <img id="itemImage" src="@Model.ImageUrl" height="150" width="150" style="border:1px solid" />
+                }
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary"  />
+                &nbsp;&nbsp;  <a asp-action="Items" asp-controller="Item" class="btn btn-warning">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

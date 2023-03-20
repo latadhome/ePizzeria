@@ -1,0 +1,40 @@
+﻿@foreach (var pizzeria in ViewBag.Pizzerias)
+{
+    var id = pizzeria.Id;
+    //var pizzaList = Model.Where(i => i.PizzeriaId == id).ToList();
+    <div class="container pb-1">
+        <div class="row pt-1">
+            <h3 class="mb-4 col-sm-12" id="heading">@pizzeria.Name</h3>
+        </div>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                if (item.PizzeriaId == id)
+                {
+                    <div class="col-sm-4 pb-1">
+                        <div class="card box-shadow">
+                            <img class="card-img-top" src="@item.ImageUrl" alt="image" style="height:200px;width:100%">
+                            <div class="card-body">
+                                <h4 class="card-title">@item.Name <span class="font-10" stye="float:right">$@item.UnitPrice.ToString("##.#")</span></h4>
+                                <p class="card-text">@item.Description</p>
+                                <p>
+                                    <span class="pt-1 d-inline-block"> Size: Regular</span>
+                                    <span class="font-10" style="float:right">
+                                        <a href="javascript:void(0)" onclick="location.href='@Url.Action("AddPizza", "Cart")?ItemId=@item.Id'" class="btn btn-outline-primary">Add To Cart</a>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+}
+<div class="toast fade hide" data-autohide="false" id="toastCart">
+    <div class="toast-header">
+        <strong class="mr-auto text-primary">Notification</strong>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">×</button>
+    </div>
+    <div class="toast-body"></div>
+</div>

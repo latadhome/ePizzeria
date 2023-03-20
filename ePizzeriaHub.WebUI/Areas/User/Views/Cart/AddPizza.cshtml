@@ -1,0 +1,80 @@
+﻿@{
+    //var toppings = TempData.Peek("Toppings");
+}
+
+<div class="row pt-4">
+    <div class="col-sm-4 pb-1" style="padding-left:20px">
+        <div class="card box-shadow">
+            <img class="card-img-top" src="@Model.ImageUrl" alt="image" style="height:200px;width:100%">
+            <div class="card-body">
+                <span class="font-20">@Model.Name </span><span class="font-20" style="float:right">$@Model.UnitPrice.ToString("##.#")</span>
+
+                <p class="card-text">@Model.Description</p>
+                <p>
+                    <hr>
+
+                <p>
+                    <div>
+                    </div>
+                    <div style="float:right">
+                        <a href="/User/Dashboard/Dashboard" class="btn btn-danger">Cancel</a>
+                        &nbsp   <span class="font-10">
+                            <a href="javascript:void(0)" onclick="AddToCart1('@Model.Id','@Model.Name','@Model.UnitPrice',1)" class="btn btn-outline-primary">Confirm</a>
+
+                        </span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-5 pb-1" style="padding-left:20px">
+    <div class="card box-shadow" style="padding-left:20px">
+        <h6 class="pt-2 pb-2">Toppings </h6>
+        <hr>
+        @foreach (var topping in ViewBag.Toppings)
+        {
+            <div class="row">
+                <div class="col-md-7 col-lg-10">
+                    <div class="d-flex justify-content-between">
+
+                        <div style="padding-left:20px">
+
+                            <span>@topping.Name ($@topping.UnitPrice)</span>
+                        </div>
+                        <div>
+                            <div class="def-number-input number-input safari_only mb-0 w-100" style="float:right;">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <button onclick="updateToppingQuantity('@topping.Id',-1,document.getElementById('@topping.Id').value)" style="height:30px" class="btn btn-outline-secondary" type="button">-</button>
+                                    </div>
+                                    <input id="@topping.Id" class="form-control sm-control" size="2" min="0" style="height:30px;width:50px" name="quantity" value="0" readonly />
+                                    <div class="input-group-append">
+                                        <button onclick="updateToppingQuantity('@topping.Id',1, document.getElementById('@topping.Id').value)" style="height:30px" class="btn btn-outline-secondary" type="button">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        }
+        <hr>
+        <div class="row">
+            <div class="col-sm-6 pb-2"> <h6>Total </h6></div>
+            <div class="offset-sm-1 col-sm-5 pb-2">
+                <span class="font-20">$</span><span class="font-20" id="extraToppings" value="0">@Model.UnitPrice</span>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="~/js/cart.js"></script>
